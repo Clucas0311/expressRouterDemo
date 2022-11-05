@@ -1,8 +1,6 @@
 const express = require("express");
 const app = express();
 
-let { pokemon } = require("./db");
-
 const path = require("path");
 const morgan = require("morgan");
 // Middleware
@@ -21,32 +19,19 @@ app.get("/", (req, res) => {
   res.send("<h1>Hello World</h1>");
 });
 
-app.get("/pokemon", (req, res) => {
-  res.send(pokemon);
-});
+// ROUTES
+// Do this first then move to index.js
+// const pokemonRouter = require("./routes/pokemon");
+// app.use(pokemonRouter);
 
-app.post("/pokemon", (req, res) => {
-  console.log(req.body);
-  pokemon.push(req.body);
-  res.send("Pokemon Added");
-});
+// const pokebagRouter = require("./routes/pokebag");
+// app.use(pokebagRouter);
 
-app.get("/pokemon/:id", (req, res) => {
-  console.log(req);
-  const { id } = req.params;
-  console.log("id", id);
-  console.log("pokemon", pokemon);
-  const singlePokemon = pokemon.find((poke) => poke.id === +id);
-  console.log("single pokemon", singlePokemon);
-  res.send(singlePokemon);
-});
+app.use("/api", require("./routes"));
 
-app.delete("/pokemon/:id", (req, res) => {
-  // read the id off the params object
-  const { id } = req.params;
-  const filteredPokemon = pokemon.filter((poke) => poke.id !== id);
-  pokemon = filteredPokemon;
-  res.send(pokemon);
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send("Something broke");
 });
 
 const PORT = 1337;

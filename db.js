@@ -59,4 +59,10 @@ let pokemon = [
   },
 ];
 
-module.exports = { pokemon };
+let pokebag = [
+  { id: 1, item: "pokedex" },
+  { id: 2, item: "pokeball" },
+  { id: 3, item: "potion" },
+];
+
+module.exports = { pokemon, pokebag };
