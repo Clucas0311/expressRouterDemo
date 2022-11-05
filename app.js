@@ -16,6 +16,17 @@ app.use(express.json());
 // Used to serve static files from our public folder
 app.use(express.static(path.join(__dirname, "public")));
 
+// Custom Middleware
+app.use((req, res, next) => {
+  console.log("I'm a random middleware and I run everytime");
+  next();
+});
+
+app.use("/pokemon", (req, res, next) => {
+  console.log("Gotta catch em' all");
+  next();
+});
+
 app.get("/", (req, res) => {
   console.log("Here");
   res.send("<h1>Hello World</h1>");
