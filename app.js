@@ -1,15 +1,20 @@
 const express = require("express");
 const app = express();
 
+let { pokemon } = require("./db");
+
+const path = require("path");
 const morgan = require("morgan");
+// Middleware
+// Morgan is used to give us helpful logging messages
 app.use(morgan("dev"));
 
 // We can't just read and send data back and forth
 // We need to configure our express application to parse incoming json
 // This allows us to pass json back and forth
 app.use(express.json());
-
-let { pokemon } = require("./db");
+// Used to serve static files from our public folder
+app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
   console.log("Here");
